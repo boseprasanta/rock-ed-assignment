@@ -1,8 +1,13 @@
+const UUIDV4 = require('uuid').v4;
 'use strict';
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable('Exams', {
+      id: {
+        type: Sequelize.DataTypes.UUID,
+        primaryKey: true
+      },
       name: {
         type: Sequelize.DataTypes.STRING,
         allowNull: false,
@@ -30,7 +35,19 @@ module.exports = {
         type: Sequelize.DataTypes.DATE,
         allowNull: false,
         defaultValue: Date.now
+      },
+      createdAt: {
+        type: Sequelize.DataTypes.DATE,
+        defaultValue: Sequelize.NOW,
+        allowNull: false
+      },
+      updatedAt: {
+        type: Sequelize.DataTypes.DATE,
+        defaultValue: Sequelize.NOW,
+        allowNull: false
       }
+    }, {
+      timestamps: true
     });
   },
   down: (queryInterface, Sequelize) => {

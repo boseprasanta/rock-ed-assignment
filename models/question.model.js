@@ -1,11 +1,16 @@
 
 
-const { Sequelize, DataTypes } = require('sequelize');
-const sequelize = require("sequelize")
+const { Sequelize, DataTypes, Model } = require('sequelize');
+const sequelize = require('../config/database');
 
 class Question extends Model {}
 
 Question.init({
+    id: {
+      type: Sequelize.DataTypes.UUID,
+      defaultValue: Sequelize.DataTypes.UUIDV4,
+      primaryKey: true
+    },
     statement: {
         type: Sequelize.DataTypes.STRING,
         allowNull: false
@@ -20,15 +25,26 @@ Question.init({
       },
 
       questionType: {
-        type: Sequelize.DataTypes.STRING,
-        enum: ["single", "multiple"]
+        type: Sequelize.DataTypes.ENUM('single', 'multiple'),
+        allowNull: false
+      },
+      createdAt: {
+        type: Sequelize.DataTypes.DATE,
+        defaultValue: Sequelize.NOW,
+        allowNull: false
+      },
+      updatedAt: {
+        type: Sequelize.DataTypes.DATE,
+        defaultValue: Sequelize.NOW,
+        allowNull: false
       }
   },
    {
     sequelize,
-    tableName: "Question",
+    modelName: 'Question',
+    tableName: 'Questions',
+    timestamps: true
   }
 );
 
-
-module.exports = Question
+module.exports = Question;
